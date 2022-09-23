@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Test-flask</title>
+    <link rel="icon" href="data:,">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/list.css">
+    <style>
+        #con {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+          }
+    </style>
+</head>
+<body>
+    <div class="container p-5 my-5 border" id="con">
+        <h2>소나기</h2>
+        <button onclick="location.href='/write'" class="w-btn-neon2">일기작성</button>
+        <button onclick="location.href='/list'" class="w-btn-neon2">목록보기</button>
+    </div>
+    
+</body>
+</html>
+<script>
+    window.onload = function() {
+        let msg = document.getElementById("message").innerHTML;
+        console.log(msg);
+        
+        /*if(msg != undefined) {
+            alert(msg);
+        }*/
+    }
+</script>

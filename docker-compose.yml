@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:  
+  backend:
+    build:
+      context: ./backend_build/
+    depends_on:
+      - database
+    networks:
+      - backend
+      - database
+    deploy:
+      replicas: 3
+    links:
+      - database
+    restart: always
+    environment:
+      - HEALTHCHECK=TRUE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/healthcheck"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  backend-lb:
+    build:
+      context: ./backend-lb_build/
+    depends_on:
+      - backend
+    networks:
+      - backend
+    restart: always
+
+  database:
+    image: mariadb:10.3.7
+    volumes:
+      - SampleDatabaseData:/var/lib/mysql
+      - ./database_build/mysql:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=DOCKERTEST
+      - MYSQL_ROOT_PASSWORD=qwerty1234
+    networks:
+      - database
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend_build/
+    networks:
+      - frontend
+      - backend
+    restart: always
+    links:
+      - backend-lb
+    deploy:
+      replicas: 3
+     
+  frontend-lb:
+    build:
+      context: ./frontend-lb_build/
+    depends_on:
+      - frontend
+    networks:
+      - frontend
+    restart: always
+    ports:
+      - 80:35000
+
+volumes:
+  SampleDatabaseData:
+
+networks:
+  backend:
+  database:
+  frontend:

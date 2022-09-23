@@ -1,0 +1,30 @@
+- 모듈 : flask
+    - 여기에 있는 Flask, render_template, jsonify, request 를 사용
+
+- 모듈 : requests
+    - flask 모듈의 request 와 다름
+    - flask 모듈의 request는 들어온 요청에 대한 값의 처리
+    - requests 는 요청을 보내는 역할
+
+- Flask(__name__) 이 flask 모듈의 이름
+    - 변수로 이 모듈을 저장
+    -> app = Flask(__name__)
+
+- 매핑 시키기
+    - 주소 요청에 따른 매핑 -> 메서드 상단에 @app.route('<url>') 형식으로 작성
+    - 기본은 Get 방식
+    - 다른 방식(post)으로 하고자 할 경우 methods 속성으로 methods=['post'] 와 같이
+    route 함수 내에 인자로 작성
+
+- 백엔드 서버로 요청 보내기
+    - requests 모듈 사용
+    - requests.post/get
+
+
+@app.route('/send')
+def test1():
+    return {"key":"value"}
+
+# 모든 외부 접속을 허용함 (포트는 기본 5000)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')

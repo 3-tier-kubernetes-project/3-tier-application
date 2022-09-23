@@ -1,0 +1,74 @@
+POST / : 일기 업로드
+Request
+{
+  "title": String,
+  "content": String
+}
+Response
+{
+    "httpStatus": "OK",
+    "message": "요청에 성공하였습니다.",
+    "data": {
+        "seq": INT (해당 일기의 일련번호)
+    }
+}
+
+GET /list : 일기 전체 목록 날짜 내림차순으로 로드
+Response
+{
+    "httpStatus": "OK",
+    "message": "\uc694\uccad\uc5d0 \uc131\uacf5\ud558\uc600\uc2b5\ub2c8\ub2e4.",
+    "data": {
+        "results": [
+            {
+                "seq": 4,
+                "title": "TEST1",
+                "content": "TEST1",
+                "createDate": "2022-09-18T17:31:57.433317"
+            },
+            {
+                "seq": 3,
+                "title": "TEST1",
+                "content": "TEST1",
+                "createDate": "2022-09-18T17:31:56.87309"
+            },
+            {
+                "seq": 2,
+                "title": "TEST1",
+                "content": "TEST1",
+                "createDate": "2022-09-18T17:31:56.22885"
+            },
+            {
+                "seq": 1,
+                "title": "TEST1",
+                "content": "TEST1",
+                "createDate": "2022-09-18T17:31:54.386394"
+            }
+        ]
+    }
+}
+
+GET /{seq:INT} : 특정한 일련번호의 일기 로드
+Response
+{
+    "httpStatus": "OK",
+    "message": "\uc694\uccad\uc5d0 \uc131\uacf5\ud558\uc600\uc2b5\ub2c8\ub2e4.",
+    "data": {
+        "result": {
+            "seq": 2,
+            "title": "TEST1",
+            "content": "TEST1",
+            "createDate": "2022-09-18T17:31:56.22885"
+        }
+    }
+}
+
+DELETE /{seq:INT} : 특정한 일련번호의 일기 삭제
+Response
+{
+    "httpStatus": "OK",
+    "message": "요청에 성공하였습니다.",
+    "data": {
+        "seq": INT (해당 일기의 일련번호)
+    }
+}

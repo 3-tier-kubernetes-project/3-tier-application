@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://database:3306/DOCKERTEST
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: "qwerty1234"
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+server:
+  port: 8081

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상세보기</title>
+    <link rel="icon" href="data:,">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1>detail view</h1>
+    <h3>backend-hostname : {{backHost}}</h3>
+    <h3>frontend-hostname : {{frontHost}}</h3>
+
+
+    <body>
+    
+       
+
+
+    <button onclick="history.back()">목록으로</button>
+    <button id="btnDel" onclick="del('{{seq}}')">삭제</button>
+    
+    <div>
+        <div class="panel panel-primary">
+            <span>글번호 : </span>
+            <span>{{diary['seq']}}</span>
+        </div>
+
+    <div class="panel panel-primary">
+        <span>작성일 : </span>
+        <span>{{diary['createDate']}}</span>
+    </div>
+
+    <div class="panel panel-primary">
+        <span>제목 : </span>
+        <span>{{diary['title']}}</span>
+    </div>
+
+    <div class="panel panel-primary">
+            <span>내용 : </span>
+            <span>{{diary['content']}}</span>
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+
+
+</html>
+<script>
+    function del(seq) {
+        // let target = document.getElementById('del'+num).innerHTML;
+        alert('삭제 대상 seq : ' + seq)
+        let delUrl = '/del/' + seq
+        location.href= delUrl
+    }
+</script>
