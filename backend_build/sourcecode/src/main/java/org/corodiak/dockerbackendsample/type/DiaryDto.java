@@ -18,6 +18,10 @@ public class DiaryDto {
 
         private String status;
         private String content;
+
+        public void encryptPassword(String BCryptpassword) {
+            this.password = BCryptpassword;
+        }
     }
 
     @AllArgsConstructor

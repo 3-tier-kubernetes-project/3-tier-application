@@ -40,9 +40,10 @@ public class HomeController {
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.GET)
     public ResponseModel getDiary(
-            @PathVariable("seq") Long seq
+            @PathVariable("seq") Long seq,
+            @RequestBody String password
     ) {
-        DiaryDto.Response result = diaryService.getDiary(seq);
+        DiaryDto.Response result = diaryService.getDiary(seq,password);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("result", result);
         responseModel.addData("hostname", System.getenv("HOSTNAME"));
@@ -51,9 +52,10 @@ public class HomeController {
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
     public ResponseModel deleteDiary(
-            @PathVariable("seq") Long seq
+            @PathVariable("seq") Long seq,
+            @RequestBody String password
     ) {
-        diaryService.deleteDiary(seq);
+        diaryService.deleteDiary(seq,password);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("hostname", System.getenv("HOSTNAME"));
         return responseModel;
@@ -88,11 +90,4 @@ public class HomeController {
             return responseModel;
     }
 
-    @ExceptionHandler({EntityNotFoundException.class})
-    public ResponseModel handle(Exception ex){
-        return ResponseModel.builder()
-                .httpStatus(HttpStatus.NOT_MODIFIED)
-                .message("수정할 데이터를 찾을 수 없습니다.")
-                .build();
-    }
 }
