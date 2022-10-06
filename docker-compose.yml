@@ -33,7 +33,7 @@ services:
     restart: always
 
   database:
-    image: mariadb:10.3.7
+    image: mariadb:10.9
     volumes:
       - SampleDatabaseData:/var/lib/mysql
       - ./database_build/mysql:/etc/mysql
