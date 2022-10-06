@@ -1,19 +1,10 @@
 package org.corodiak.dockerbackendsample.type;
 
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
@@ -23,15 +14,31 @@ import lombok.Setter;
 @Builder
 public class Diary {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "diary_seq")
-	private Long seq;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "diary_seq")
+    private Long seq;
 
-	private String title;
+    private String title;
 
-	private String content;
+    private String writer;
 
-	private LocalDateTime createDate;
+    private String password;
+
+    private String status;
+
+    private String content;
+
+
+    @UpdateTimestamp
+    private LocalDateTime createDate;
+
+    public void updateDiary(DiaryDto.Request diaryDto) {
+        this.title = diaryDto.getTitle();
+        this.writer = diaryDto.getWriter();
+        this.password = diaryDto.getPassword();
+        this.status = diaryDto.getStatus();
+        this.content = diaryDto.getContent();
+    }
 
 }

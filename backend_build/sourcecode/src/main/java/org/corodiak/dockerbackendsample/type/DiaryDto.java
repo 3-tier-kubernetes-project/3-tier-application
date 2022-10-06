@@ -1,40 +1,52 @@
 package org.corodiak.dockerbackendsample.type;
 
-import java.time.LocalDateTime;
+import lombok.*;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 public class DiaryDto {
 
-	@AllArgsConstructor
-	@NoArgsConstructor(access = AccessLevel.PROTECTED)
-	@Builder
-	@Getter
-	public static class Request {
-		private String title;
-		private String content;
-	}
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @Builder
+    @Getter
+    public static class Request {
+        private String title;
+        private String writer;
 
-	@AllArgsConstructor
-	@NoArgsConstructor(access = AccessLevel.PROTECTED)
-	@Builder
-	@Getter
-	public static class Response {
-		private Long seq;
-		private String title;
-		private String content;
-		private LocalDateTime createDate;
+        private String password;
 
-		public Response(Diary diary) {
-			this.seq = diary.getSeq();
-			this.title = diary.getTitle();
-			this.content = diary.getContent();
-			this.createDate = diary.getCreateDate();
-		}
-	}
+        private String status;
+        private String content;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @Builder
+    @Getter
+    public static class Response {
+        private Long seq;
+        private String title;
+
+        private String writer;
+
+        private String password;
+
+        private String status;
+        private String content;
+        private LocalDateTime createDate;
+
+
+
+        public Response(Diary diary) {
+            this.seq = diary.getSeq();
+            this.title = diary.getTitle();
+            this.writer = diary.getWriter();
+            this.password = diary.getPassword();
+            this.status = diary.getStatus();
+            this.content = diary.getContent();
+            this.createDate = diary.getCreateDate();
+        }
+    }
 
 }
