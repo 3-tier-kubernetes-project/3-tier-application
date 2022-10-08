@@ -47,20 +47,18 @@ def save():
 # 일기 전체 목록 날짜 내림차순으로 로드
 @app.route('/list')
 def list():
-    lists = requests.get(url + '/list').json()    
+    lists = requests.get(url + '/list').json()
     return render_template('/list.html', lists = lists['data']['results'])
 
 # 특정한 일련번호 일기 로드
 @app.route('/<seq>')
 def detail(seq):
     diarylist = requests.get(url + '/' + seq).json()
-    frontHost = socket.gethostname()
+    # frontHost = socket.gethostname()
     print(socket.gethostname())
     return render_template("/detailView.html",
         seq = seq,
-        diary = diarylist['data']['result'],
-        backHost = diarylist['data']['hostname'],
-        frontHost = frontHost)
+        diary = diarylist['data']['result'])
 
 # 일기 삭제
 @app.route('/del/<seq>')

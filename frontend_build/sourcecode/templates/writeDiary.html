@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>일기 작성</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="https://user-images.githubusercontent.com/54930365/194706403-e3cd6125-9560-46ed-9555-ab7900d5ca8c.png">
+    <link rel="stylesheet" href="/static/list.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -15,20 +16,16 @@
 
 </head>
 
-<body>
+<body style="margin: 0;width:100%;align-items: center;">
 
-<div class="container" style="padding-top: 50px; ">
-    <div style="background-color: aqua; padding:10px">
-        <h1 style="text-align: center">오늘의 일기</h1>
+<div class="container" style="margin: 0;width:100%;">
+        <h1 style="text-align: center;">오늘의 일기</h1>
         <form action="/" method="post">
-            <table style="border: 3px solid;border-collapse: separate;width:100%;">
-                <colgroup>
-                    <col style="width:10%">
-
-                </colgroup>
+            <table style="border: 2px solid;border-collapse: collapse;width: 1000px;
+            height:500px;font-size:24px;text-align: center;table-layout: fixed">
                 <tbody>
                 <tr>
-                    <th scope="row">
+                    <th scope="row" style="background: #ffdd8e">
                         제목
                     </th>
                     <td colspan="2">
@@ -38,7 +35,7 @@
                     <th>
                         오늘의 기분
                     </th>
-                    <td>
+                    <td colspan="2">
                         <select name="status">
                             <option value="보통">보통😀</option>
                             <option value="행복">행복😄</option>
@@ -67,7 +64,6 @@
                     <td colspan="2">
                         <input type="password" name="password" class="form-info"
                                placeholder="10자 이내" minlength="3" maxlength="10">
-                        <input type="button" id="showPassword" value="show" class="button" />
                     </td>
 
                 </tr>
@@ -90,10 +86,18 @@
 
 
             <button type="submit" class="btn btn-secondary mb-3" style="margin: 5px;">제출하기</button>
-            <button style="margin: 5px;" class="btn btn-secondary mb-3" onclick="history.back()">뒤로가기</button>
+            <button class="btn btn-secondary mb-3" style="margin: 5px;" onclick="history.back()">뒤로가기</button>
 
         </form>
-    </div>
 </div>
 </body>
 </html>
+<style>
+    th, td {
+        border: 2px solid #444444;
+        padding: 10px;
+    }
+    th {
+        background: #ffdd8e;
+    }
+</style>
