@@ -62,8 +62,10 @@
                         비밀번호
                     </th>
                     <td colspan="2">
-                        <input type="password" name="password" class="form-info"
+                        <input type="password" name="password" id="password" class="form-info"
                                placeholder="10자 이내" minlength="3" maxlength="10">
+                        <img src="https://user-images.githubusercontent.com/54930365/194729984-95cf1b29-c385-4d72-ac45-198f622532ed.png"
+                        id="showText" onclick="hideShowPsw()">
                     </td>
 
                 </tr>
@@ -100,4 +102,21 @@
     th {
         background: #ffdd8e;
     }
+    img {
+        weight: 30px;
+        height: 30px;
+    }
 </style>
+<script type="text/javascript">
+    var demoImg = document.getElementById("showText");
+    var demoInput = document.getElementById("password");
+    function hideShowPsw() {
+        if (demoInput.type == "password") {
+            demoInput.type = "text";
+            demoImg.src ="https://user-images.githubusercontent.com/54930365/194729986-f0d30df6-5a09-423a-8de4-bdf883af54b8.png";
+        } else {
+            demoInput.type = "password";
+            demoImg.src = "https://user-images.githubusercontent.com/54930365/194729984-95cf1b29-c385-4d72-ac45-198f622532ed.png";
+        }
+    }
+</script>
