@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 import requests, socket, json
 
-url = "http://backend-lb:8080"
+# url = "http://backend-lb:8080"
+url = "http://localhost:8082"
 
 app = Flask(__name__)
 
@@ -22,7 +23,10 @@ def save():
     result = request.form
     diary = {
         'title':result['title'],
-        'content':result['content']
+        'content':result['content'],
+        'writer':result['writer'],
+        'password':result['password'],
+        'status':result['status']
     }
     
     # 백엔드 서버로 전송
@@ -72,6 +76,13 @@ def delDiary(seq):
 
     # list 화면으로 이동
     return redirect(url_for('list'))
+
+# 일기 수정
+@app.route('/diary/<seq>')
+def updateDiary(seq):
+    result = requests.request('PUT',url+'/'+seq)
+    return redirect(url_for('/<seq>'))
+
 
 # 모든 외부 접속을 허용함 (포트는 기본 5000)
 if __name__ == "__main__":

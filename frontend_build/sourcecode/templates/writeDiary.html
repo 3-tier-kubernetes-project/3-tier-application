@@ -4,39 +4,96 @@
     <meta charset="UTF-8">
     <title>일기 작성</title>
     <link rel="icon" href="data:,">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-    
-    <div class="container" style="padding-top: 50px; ">
-        <div style="background-color: aqua; padding:10px">
-    <h1>WriteDiary</h1>
-    <form action="/" method="post" >
-        <input type="text" name="title" class="form-control mt-4 mb-2"
-            placeholder="제목을 입력해주세요." required
-        >
-        <div class="form-group">
-            <textarea class="form-control" rows="10" name="content"
-                placeholder="내용을 입력해주세요" required
-            ></textarea>
-        </div>
-        <button type="submit" class="btn btn-secondary mb-3" style="margin: 5px;">제출하기</button> <button style="margin: 5px;" class="btn btn-secondary mb-3" onclick="history.back()">뒤로가기</button>
-    </form>
-</div >
-    </div>
 
-    
-    
-    <!-- <form action="/" method="post">
-        제목 
-        <input type="text" name="title"/> <br>
-        내용 <br>
-        <textarea type="text" name="content" cols="50" rows="20"></textarea> <br>
-        <input type="submit" value="send"/>
-    </form> -->
+<div class="container" style="padding-top: 50px; ">
+    <div style="background-color: aqua; padding:10px">
+        <h1 style="text-align: center">오늘의 일기</h1>
+        <form action="/" method="post">
+            <table style="border: 3px solid;border-collapse: separate;width:100%;">
+                <colgroup>
+                    <col style="width:10%">
+
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">
+                        제목
+                    </th>
+                    <td colspan="2">
+                        <input type="text" name="title" class="form-control mt-4 mb-2"
+                               placeholder="제목을 입력해주세요." required>
+                    </td>
+                    <th>
+                        오늘의 기분
+                    </th>
+                    <td>
+                        <select name="status">
+                            <option value="보통">보통😀</option>
+                            <option value="행복">행복😄</option>
+                            <option value="신남">신남😆</option>
+                            <option value="놀람">놀람😳</option>
+                            <option value="당황">당황😅</option>
+                            <option value="감동">감동🥹</option>
+                            <option value="우울">우울🙁</option>
+                            <option value="지루">지루🥱</option>
+                            <option value="짜증">짜증🤬</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        닉네임
+                    </th>
+                    <td colspan="2">
+                        <input type="text" name="writer" class="form-info"
+                               placeholder="10자 이내" maxlength="10">
+                    </td>
+
+                    <th>
+                        비밀번호
+                    </th>
+                    <td colspan="2">
+                        <input type="password" name="password" class="form-info"
+                               placeholder="10자 이내" minlength="3" maxlength="10">
+                        <input type="button" id="showPassword" value="show" class="button" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>
+                        내용
+                    </th>
+                    <td colspan="5">
+                        <div class="form-group">
+            <textarea class="form-control" rows="10" name="content"
+                      placeholder="내용을 입력해주세요" required
+            ></textarea>
+                        </div>
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+
+            <button type="submit" class="btn btn-secondary mb-3" style="margin: 5px;">제출하기</button>
+            <button style="margin: 5px;" class="btn btn-secondary mb-3" onclick="history.back()">뒤로가기</button>
+
+        </form>
+    </div>
+</div>
 </body>
 </html>

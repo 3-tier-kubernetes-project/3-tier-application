@@ -2,12 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Test-flask</title>
+    <title>소중한 나의 일기</title>
     <link rel="icon" href="data:,">
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="/static/list.css">
+    <link rel="icon" href="https://user-images.githubusercontent.com/54930365/194706403-e3cd6125-9560-46ed-9555-ab7900d5ca8c.png">
     <style>
         #con {
             position: absolute;
@@ -15,25 +16,29 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
-          }
+        }
     </style>
 </head>
 <body>
-    <div class="container p-5 my-5 border" id="con">
-        <h2>소나기</h2>
-        <button onclick="location.href='/write'" class="w-btn-neon2">일기작성</button>
-        <button onclick="location.href='/list'" class="w-btn-neon2">목록보기</button>
+<div class="container p-5 my-5 border" id="con" style="padding: 20px;background: white">
+    <div style="padding: 10px;background: white">
+        <img width="500" alt="스크린샷 2022-10-08 오후 8 31 09"
+             src="https://user-images.githubusercontent.com/54930365/194705939-238f0c12-660a-4ffc-b775-45e2b9176ee3.png">
+        <div style="background: white">
+            <img
+                width="13%" style="margin:40px;background: white"
+                src="https://user-images.githubusercontent.com/54930365/194704969-44239a3d-e8eb-4670-85dd-bd171617c44b.png">
+        </div>
     </div>
-    
+    <button onclick="location.href='/write'" class="w-btn-neon2">일기작성</button>
+    <button onclick="location.href='/list'" class="w-btn-neon2">목록보기</button>
+</div>
+
 </body>
 </html>
 <script>
-    window.onload = function() {
+    window.onload = function () {
         let msg = document.getElementById("message").innerHTML;
         console.log(msg);
-        
-        /*if(msg != undefined) {
-            alert(msg);
-        }*/
     }
 </script>

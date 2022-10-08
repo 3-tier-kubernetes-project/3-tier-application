@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 
+@font-face {
+    font-family: LeeSeoyun;
+    src: local('../font/LeeSeoyun.otf');
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,12 +14,15 @@
 body {
     text-align: center;
     padding: 100px;
-    background: whitesmoke;
     display: table-cell;
 }
 
 button {
-    margin: 20px;
+    font-family: LeeSeoyun;
+    margin: 28px;
+    padding: 5px 20px 5px 20px;
+    border: black 2px;
+    font-size: 36px;
 }
 
 @keyframes ring {
@@ -32,18 +40,17 @@ button {
 
 .w-btn-neon2 {
     position: relative;
-    border: none;
     min-width: 200px;
     min-height: 50px;
     background: linear-gradient(
         90deg,
-        rgba(129, 230, 217, 1) 0%,
-        rgba(79, 209, 197, 1) 100%
+        rgba(255, 215, 119,1) 0%,
+        rgba(247, 160, 9,1) 100%
+
     );
     border-radius: 1000px;
-    color: darkslategray;
     cursor: pointer;
-    box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+
     font-weight: 700;
     transition: 0.3s;
 }
@@ -57,7 +64,7 @@ button {
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    border: 6px solid #00ffcb;
+    border: 6px solid #fcb63c;
     position: absolute;
     z-index: -1;
     top: 50%;
@@ -65,3 +72,4 @@ button {
     transform: translate(-50%, -50%);
     animation: ring 1.5s infinite;
 }
+
