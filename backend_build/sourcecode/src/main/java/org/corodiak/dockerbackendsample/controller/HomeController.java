@@ -40,10 +40,10 @@ public class HomeController {
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.GET)
     public ResponseModel getDiary(
-            @PathVariable("seq") Long seq,
-            @RequestBody String password
+            @PathVariable("seq") Long seq
     ) {
-        DiaryDto.Response result = diaryService.getDiary(seq,password);
+        DiaryDto.Response result = diaryService.getDiary(seq);
+        result.replaceToNR();
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("result", result);
         responseModel.addData("hostname", System.getenv("HOSTNAME"));
@@ -53,9 +53,9 @@ public class HomeController {
     @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
     public ResponseModel deleteDiary(
             @PathVariable("seq") Long seq,
-            @RequestBody String password
+            @RequestBody DiaryDto.password password
     ) {
-        diaryService.deleteDiary(seq,password);
+        diaryService.deleteDiary(seq,password.getPassword());
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("hostname", System.getenv("HOSTNAME"));
         return responseModel;

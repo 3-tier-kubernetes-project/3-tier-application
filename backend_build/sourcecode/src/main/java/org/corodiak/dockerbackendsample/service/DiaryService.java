@@ -34,10 +34,10 @@ public class DiaryService {
         }
     }
 
-    public DiaryDto.Response getDiary(Long seq,String password) {
-        validate(password,findPassword(seq));
+    public DiaryDto.Response getDiary(Long seq) {
         Diary result = diaryRepository.findById(seq)
                 .orElseThrow(EntityNotFoundException::new);
+
         return new DiaryDto.Response(result);
     }
 
@@ -48,6 +48,7 @@ public class DiaryService {
 
     @Transactional
     public Long addDiary(DiaryDto.Request diaryDto) {
+        diaryDto.replaceToBr();
         Diary diary = Diary.builder()
                 .title(diaryDto.getTitle())
                 .writer(diaryDto.getWriter())
@@ -71,6 +72,7 @@ public class DiaryService {
         validate(diaryDto.getPassword(),findPassword(seq));
         Diary result = diaryRepository.findById(seq)
                 .orElseThrow(EntityNotFoundException::new);
+        diaryDto.replaceToBr();
         result.updateDiary(diaryDto);
         return new DiaryDto.Response(result);
     }
