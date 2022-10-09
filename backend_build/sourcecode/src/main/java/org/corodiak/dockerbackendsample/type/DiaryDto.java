@@ -23,8 +23,8 @@ public class DiaryDto {
             this.password = BCryptpassword;
         }
 
-        public void replaceToBr(){
-            this.content = this.content.replace("\r\n","<br>");
+        public void replaceToBr() {
+            this.content = this.content.replace("\r\n", "<br>");
         }
     }
 
@@ -44,8 +44,8 @@ public class DiaryDto {
         private String content;
         private LocalDateTime createDate;
 
-        public void replaceToNR(){
-            this.content = this.content.replace("<br>","\r\n");
+        public void replaceToNR() {
+            this.content = this.content.replace("<br>", "\r\n");
         }
 
         public Response(Diary diary) {
@@ -62,7 +62,7 @@ public class DiaryDto {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @Getter
-    public static class password{
+    public static class Password {
         String password;
     }
 

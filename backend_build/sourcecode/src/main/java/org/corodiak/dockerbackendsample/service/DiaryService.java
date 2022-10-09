@@ -22,14 +22,14 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public String findPassword(Long seq){
+    public String findPassword(Long seq) {
         Diary result = diaryRepository.findById(seq)
                 .orElseThrow(EntityNotFoundException::new);
         return result.getPassword();
     }
 
-    public void validate(String password,String encrypted){
-        if(!encoder.matches(password,encrypted)){
+    public void validatePassword(String password, String encrypted) {
+        if (!encoder.matches(password, encrypted)) {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
     }
@@ -62,18 +62,21 @@ public class DiaryService {
     }
 
     @Transactional
-    public void deleteDiary(Long seq,String password) {
-        validate(password,findPassword(seq));
+    public void deleteDiary(Long seq, String password) {
+        validatePassword(password, findPassword(seq));
         diaryRepository.deleteById(seq);
     }
 
     @Transactional
-    public DiaryDto.Response updateDiary(Long seq,DiaryDto.Request diaryDto) {
-        validate(diaryDto.getPassword(),findPassword(seq));
+    public DiaryDto.Response updateDiary(Long seq, DiaryDto.Request diaryDto) {
         Diary result = diaryRepository.findById(seq)
                 .orElseThrow(EntityNotFoundException::new);
         diaryDto.replaceToBr();
         result.updateDiary(diaryDto);
         return new DiaryDto.Response(result);
+    }
+
+    public void validate(Long seq, String password) {
+        validatePassword(password, findPassword(seq));
     }
 }

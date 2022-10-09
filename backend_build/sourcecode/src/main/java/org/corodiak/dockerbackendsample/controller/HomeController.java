@@ -8,7 +8,6 @@ import org.corodiak.dockerbackendsample.type.ResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -53,9 +52,10 @@ public class HomeController {
     @RequestMapping(value = "/{seq}", method = RequestMethod.DELETE)
     public ResponseModel deleteDiary(
             @PathVariable("seq") Long seq,
-            @RequestBody DiaryDto.password password
+            @RequestBody DiaryDto.Password password
     ) {
-        diaryService.deleteDiary(seq,password.getPassword());
+        System.out.println("삭제 호출");
+        diaryService.deleteDiary(seq, password.getPassword());
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("hostname", System.getenv("HOSTNAME"));
         return responseModel;
@@ -84,10 +84,21 @@ public class HomeController {
             @PathVariable("seq") Long seq,
             @RequestBody DiaryDto.Request diaryDto
     ) {
-            DiaryDto.Response result = diaryService.updateDiary(seq,diaryDto);
-            ResponseModel responseModel = ResponseModel.builder().build();
-            responseModel.addData("result",result);
-            return responseModel;
+        System.out.println("수정 호출");
+        DiaryDto.Response result = diaryService.updateDiary(seq, diaryDto);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("result", result);
+        return responseModel;
     }
 
+    @RequestMapping(value="/validation/{seq}", method = RequestMethod.GET)
+    public ResponseModel validatePassword(
+            @PathVariable("seq") Long seq,
+            @RequestBody DiaryDto.Password password
+    ){
+        System.out.println("유효성 검사");
+        diaryService.validate(seq,password.getPassword());
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
 }
