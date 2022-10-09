@@ -2,7 +2,8 @@ version: "3.8"
 
 services:  
   backend:
-    image: 2214yj/3-tier-application-backend:1.0
+    build:
+      context: ./backend_build/
     depends_on:
       - database
     networks:
@@ -23,7 +24,8 @@ services:
       start_period: 60s
 
   backend-lb:
-    image: 2214yj/3-tier-application-backend-lb:1.0
+    build:
+      context: ./backend-lb_build/
     depends_on:
       - backend
     networks:
@@ -45,7 +47,8 @@ services:
     restart: always
 
   frontend:
-    image: 2214yj/3-tier-application-frontend:1.0
+    build:
+      context: ./frontend_build/
     networks:
       - frontend
       - backend
@@ -56,7 +59,8 @@ services:
       replicas: 3
      
   frontend-lb:
-    image: 2214yj/3-tier-application-frontend-lb:1.0
+    build:
+      context: ./frontend-lb_build/
     depends_on:
       - frontend
     networks:
