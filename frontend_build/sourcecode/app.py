@@ -3,8 +3,7 @@ import requests
 import socket
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-# url = "http://backend-lb:8080"
-url = "http://localhost:8082"
+url = "http://backend-lb:8080"
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -37,14 +36,6 @@ def save():
 
     # 백엔드 서버로 전송
     test11 = requests.post(url + '/', json=diary)
-
-    # 데이터 확인
-    # print('서버 응답 완료')
-    # print('입력값 확인 : ', test11)
-    # print('요청 url : ', test11.url)
-    # print('요청 header', test11.headers)
-    # print('내용 : ', test11._content)
-
     mySeq = json.loads(test11.text)
     seq = mySeq['data']['seq']
 
