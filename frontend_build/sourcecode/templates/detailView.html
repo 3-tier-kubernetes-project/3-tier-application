@@ -25,13 +25,14 @@
             integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
             crossorigin="anonymous"></script>
 </head>
-<body style="margin: 0;width:100%;align-items: center;">
+<body style="margin: 0;width:100%;" onload="loadStatus()">
+
 
 <div class="container" style="margin: 0;width:100%;">
     <h1 style="text-align: center;">오늘의 일기</h1>
-    <form action="/" method="post">
+    <div style="margin: 0px auto;display: block;margin-top:30px;font-size:24px;">
         <table style="border: 2px solid;border-collapse: collapse;width: 1000px;
-            height:500px;font-size:24px;text-align: center;table-layout: fixed">
+            height:500px;font-size:24px;text-align: center;table-layout: fixed;margin: auto">
             <tbody>
             <tr>
                 <th scope="row" style="background: #ffdd8e; height: 20%">
@@ -44,7 +45,17 @@
                     오늘의 기분
                 </th>
                 <td colspan="2">
-                    {{ diary['status'] }}
+                    <select name="status" id="status">
+                        <option value="보통">보통😀</option>
+                        <option value="행복">행복😄</option>
+                        <option value="신남">신남😆</option>
+                        <option value="놀람">놀람😳</option>
+                        <option value="당황">당황😅</option>
+                        <option value="감동">감동🥹</option>
+                        <option value="우울">우울🙁</option>
+                        <option value="지루">지루🥱</option>
+                        <option value="짜증">짜증🤬</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -77,24 +88,119 @@
 
             </tbody>
         </table>
-        <button onclick="location.href='/list';return false;" class="btn btn-secondary mb-3" style="margin: 5px;">목록으로</button>
-        <button class="btn btn-secondary mb-3" style="margin: 5px;" onclick="del('{{ seq }}')">삭제</button>
-    </form>
+    </div>
+    <button onclick="location.href='/list';return false;" class="btn btn-secondary mb-3"
+            style="margin: 10px 5px 0px 150px;font-size: 24px">목록으로
+    </button>
+    {#        <button class="btn btn-secondary mb-3" style="margin: 5px;" onclick="location.href='/del/{{ seq }}';return false;">삭제</button>#}
+    <button class="btn btn-secondary mb-3" id="btnDelete" style="margin: 10px 5px 0px 0px; font-size: 24px">삭제</button>
+    <button class="btn btn-secondary mb-3" id="btnUpdate" style="margin: 10px 0px 0px 0px; font-size: 24px">수정</button>
+
+    {#    // 삭제 모달#}
+    <div id="modal-del">
+        <div id="content">
+            <h2 style="padding:30px;margin:0px auto;text-align: center">{{ seq }} 번 일기를 삭제하려면 비밀번호를 입력해주세요.</h2>
+            <form action="/del/{{ seq }}" method="POST">
+                <div id="password_input">
+                    <input type="password" name="password" placeholder="비밀번호" style="font-size: 21px">
+                </div>
+                <div id="password_check_btn">
+                    <button type="submit" class="btn btn-secondary mb-3" id="btnDelCheck"
+                            style="font-size: 24px;margin: 0px 10px 0px 0px">확인
+                    </button>
+                    <button type="button" class="btn btn-secondary mb-3" id="btnDelClose"
+                            style="font-size: 24px;margin: 0px">취소
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    {#    // 수정 모달#}
+    <div id="modal-upt">
+        <div id="content">
+            <h2 style="padding:30px;margin:0px auto;text-align: center">{{ seq }} 번 일기를 수정하려면 비밀번호를 입력해주세요.</h2>
+            <form action="/auth/{{ seq }}" method="POST">
+                <div id="password_input">
+                    <input type="password" name="password" placeholder="비밀번호" style="font-size: 24px">
+                </div>
+                <div id="password_check_btn">
+                    <button type="submit" class="btn btn-secondary mb-3" id="btnUptCheck"
+                            style="font-size: 24px;margin: 0px 10px 0px 0px">확인
+                    </button>
+                    <button type="button" class="btn btn-secondary mb-3" id="btnUptClose"
+                            style="font-size: 24px;margin: 0px">취소
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    {#    //모달 스크립트#}
+    <script>
+
+        var btnDelete = document.getElementById('btnDelete');
+        var btnUpdate = document.getElementById('btnUpdate');
+        var btnDelCheck = document.getElementById('btnDelCheck');
+        var btnDelClose = document.getElementById('btnDelClose');
+        var btnUptCheck = document.getElementById('btnUptCheck');
+        var btnUptClose = document.getElementById('btnUptClose');
+
+
+        // 삭제 modal 창을 감춤
+        var closeDelRtn = function () {
+            var modalDel = document.getElementById('modal-del');
+            modalDel.style.display = 'none';
+        }
+
+        // 수정 modal 창을 감춤
+        var closeUptRtn = function () {
+            var modalUpt = document.getElementById('modal-upt');
+            modalUpt.style.display = 'none';
+        }
+
+        // 삭제 modal 창을 보여줌
+        btnDelete.onclick = function () {
+            var modal = document.getElementById('modal-del');
+            modal.style.display = 'block';
+        }
+        // 수정 modal 창을 보여줌
+        btnUpdate.onclick = function () {
+            var modal = document.getElementById('modal-upt');
+            modal.style.display = 'block';
+        }
+
+        btnDelCheck.onclick = closeDelRtn;
+        btnDelClose.onclick = closeDelRtn;
+        btnUptCheck.onclick = closeUptRtn;
+        btnUptClose.onclick = closeUptRtn;
+
+        // 불러온 오늘의 기분 값으로 selected
+        function loadStatus() {
+            var status = document.getElementById('status');
+            for (var i = 0; i < status.options.length; i++) {
+                if (status.options[i].value === "{{ diary['status'] }}") {
+                    status.options[i].selected = true;
+                }
+            }
+        }
+    </script>
 </div>
 
 </body>
-
-
 </html>
-<script>
-    function del(seq) {
-        // let target = document.getElementById('del'+num).innerHTML;
-        alert('삭제 대상 seq : ' + seq)
-        let delUrl = '/del/' + seq
-        location.href = delUrl
-    }
 
-</script>
+{# 삭제 - 비밀번호 불일치 메시지 alert#}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}");
+        </script>
+    {% endif %}
+{% endwith %}
+
 <style>
     th, td {
         border: 2px solid #444444;
@@ -104,4 +210,63 @@
     th {
         background: #ffdd8e;
     }
+
+    {#모달 style#}
+    {#모달 바깥창#}
+    #modal-del, #modal-upt {
+        display: none;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, .3);
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    {#모달창#}
+    #modal-del > #content, #modal-upt > #content {
+        width: 500px;
+        height: 300px;
+        margin: 200px auto;
+        padding: 20px;
+        position: relative;
+        background-color: #fff;
+    }
+
+    #modal-del .close:hover,
+    #modal-upt .close:hover,
+    #modal-del .close:focus,
+    #modal-upt .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #btnDelClose, #btnDelCheck {
+        padding: 5px;
+        text-align: center;
+        margin: 10px auto;
+        display: inline-block;
+    }
+
+    #btnUptClose, #btnUptCheck {
+        padding: 5px;
+        text-align: center;
+        margin: 10px auto;
+        display: inline-block;
+    }
+
+    #password_input {
+        margin: 0px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    #password_check_btn {
+        margin: 0px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
 </style>

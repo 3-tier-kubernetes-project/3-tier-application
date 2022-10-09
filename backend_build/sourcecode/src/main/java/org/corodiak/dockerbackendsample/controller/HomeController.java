@@ -84,20 +84,18 @@ public class HomeController {
             @PathVariable("seq") Long seq,
             @RequestBody DiaryDto.Request diaryDto
     ) {
-        System.out.println("수정 호출");
         DiaryDto.Response result = diaryService.updateDiary(seq, diaryDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("result", result);
         return responseModel;
     }
 
-    @RequestMapping(value="/validation/{seq}", method = RequestMethod.GET)
-    public ResponseModel validatePassword(
+    @RequestMapping(value = "/auth/{seq}", method = RequestMethod.GET)
+    public ResponseModel authenticate(
             @PathVariable("seq") Long seq,
             @RequestBody DiaryDto.Password password
-    ){
-        System.out.println("유효성 검사");
-        diaryService.validate(seq,password.getPassword());
+    ) {
+        diaryService.authenticate(seq, password.getPassword());
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

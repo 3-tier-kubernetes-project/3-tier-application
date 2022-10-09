@@ -72,11 +72,12 @@ public class DiaryService {
         Diary result = diaryRepository.findById(seq)
                 .orElseThrow(EntityNotFoundException::new);
         diaryDto.replaceToBr();
+        diaryDto.encryptPassword(encoder.encode(diaryDto.getPassword()));
         result.updateDiary(diaryDto);
         return new DiaryDto.Response(result);
     }
 
-    public void validate(Long seq, String password) {
+    public void authenticate(Long seq, String password) {
         validatePassword(password, findPassword(seq));
     }
 }

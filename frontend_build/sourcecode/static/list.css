@@ -8,22 +8,21 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: LeeSeoyun;
 }
 
 body {
     text-align: center;
-    padding: 100px;
-    display: table-cell;
+    padding: 30px;
 }
+
 
 button {
     font-family: LeeSeoyun;
     margin: 28px;
     padding: 5px 20px 5px 20px;
     border: black 2px;
-    font-size: 36px;
+    font-size: 24px;
 }
 
 @keyframes ring {
