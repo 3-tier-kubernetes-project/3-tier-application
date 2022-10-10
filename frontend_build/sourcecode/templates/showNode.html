@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>정보 확인</title>
+    <link rel="icon"
+          href="https://user-images.githubusercontent.com/54930365/194706403-e3cd6125-9560-46ed-9555-ab7900d5ca8c.png">
+</head>
+<body>
+<div>
+    <table>
+        <th></th>
+        <th>HostName</th>
+        <th>HostIp</th>
+        <tr>
+            <th>frontend</th>
+            <td>{{ frontHost }}</td>
+            <td>{{ frontIp }}</td>
+        </tr>
+        <tr>
+            <th>backend</th>
+            <td>{{ backHost }}</td>
+            <td>{{ backIp }}</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<style>
+    div{
+        margin: 50px;
+    }
+    table{
+        border-collapse: collapse;
+        border: solid 2px black;
+        margin: 0px;
+    }
+    td,th{
+        border: solid 2px black;
+        text-align: center;
+        font-size: 40px;
+        padding: 30px;
+    }
+</style>

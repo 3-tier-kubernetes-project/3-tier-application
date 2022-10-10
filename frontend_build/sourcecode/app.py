@@ -1,6 +1,7 @@
 import json
-import requests
 import socket
+
+import requests
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 url = "http://backend:8081"
@@ -141,6 +142,19 @@ def updateDiary(seq):
     updateResult = requests.put(url + '/' + seq, json=diary).json()
     return redirect(url_for('list'))
 
+
+# Node IP 출력
+@app.route('/info')
+def showInfo():
+    result = requests.get(url + '/show').json()
+    frontHost = socket.gethostname()
+    frontIp = socket.gethostbyname(frontHost)
+    print('ignoring failed address lookup')
+    return render_template("/showNode.html",
+                       backHost=result['data']['hostname'],
+                       backIp=result['data']['hostaddress'],
+                       frontHost=frontHost,
+                       frontIp=frontIp)
 
 # 모든 외부 접속을 허용함 (포트는 기본 5000)
 if __name__ == "__main__":

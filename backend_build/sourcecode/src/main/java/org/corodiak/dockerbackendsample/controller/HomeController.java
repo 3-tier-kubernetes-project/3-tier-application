@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @RestController
@@ -97,6 +99,15 @@ public class HomeController {
     ) {
         diaryService.authenticate(seq, password.getPassword());
         ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
+    public ResponseModel showNode() throws UnknownHostException {
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData("hostname", inetAddress.getHostName());
+        responseModel.addData("hostaddress", inetAddress.getHostAddress());
         return responseModel;
     }
 }

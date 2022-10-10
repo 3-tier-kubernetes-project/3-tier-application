@@ -17,10 +17,11 @@
 
 </head>
 
-<body style="margin: 0;width:100%;align-items: center;" onload="loadStatus()">
+<body style="margin: 0px;width:100%;align-items: center;display: flex;justify-content: center;
+  align-items:center;" onload="loadStatus()">
 
-<div class="container" style="margin: 0;width:100%;">
-    <h1 style="text-align: center;">오늘의 일기</h1>
+<div class="container" style="margin: 0;width:100%;padding-top:5%;">
+    <h1 style="text-align: center;">{{ seq }}번 일기</h1>
     <div style="margin: 0px auto;display: block;margin-top:30px;font-size:24px;">
         <form action="/update/{{ seq }}" method="post">
             <table style="border: 2px solid;border-collapse: collapse;width: 1000px;
