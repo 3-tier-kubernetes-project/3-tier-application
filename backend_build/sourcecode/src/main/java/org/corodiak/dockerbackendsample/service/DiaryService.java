@@ -80,4 +80,9 @@ public class DiaryService {
     public void authenticate(Long seq, String password) {
         validatePassword(password, findPassword(seq));
     }
+
+    public List<DiaryDto.Response> getDiaryListOrderBySeq() {
+        List<Diary> results = diaryRepository.findAll(Sort.by(Sort.Direction.DESC, "seq"));
+        return results.stream().map(DiaryDto.Response::new).collect(Collectors.toList());
+    }
 }

@@ -39,15 +39,18 @@ def save():
     test11 = requests.post(url + '/', json=diary)
     mySeq = json.loads(test11.text)
     seq = mySeq['data']['seq']
-
     return redirect('/' + str(seq))
 
 
-# 일기 전체 목록 날짜 내림차순으로 로드
+# 일기 전체 목록 로드
 @app.route('/list')
 def list():
-    lists = requests.get(url + '/list').json()
-    return render_template('/list.html', lists=lists['data']['results'])
+    sort = request.args['sort']
+    if sort == 'seq':
+        lists = requests.get(url + '/list?sort=seq').json()
+    else:
+        lists = requests.get(url + '/list?sort=time').json()
+    return render_template('/list.html', lists=lists['data']['results'], sort=sort)
 
 
 # 특정한 일련번호 일기 로드
@@ -150,10 +153,11 @@ def showInfo():
     frontHost = socket.gethostname()
     frontIp = socket.gethostbyname(frontHost)
     return render_template("/showInfo.html",
-                       backHost=result['data']['hostname'],
-                       backIp=result['data']['hostaddress'],
-                       frontHost=frontHost,
-                       frontIp=frontIp)
+                           backHost=result['data']['hostname'],
+                           backIp=result['data']['hostaddress'],
+                           frontHost=frontHost,
+                           frontIp=frontIp)
+
 
 # 모든 외부 접속을 허용함 (포트는 기본 5000)
 if __name__ == "__main__":

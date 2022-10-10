@@ -31,8 +31,15 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseModel getDiaryList() {
-        List<DiaryDto.Response> results = diaryService.getDiaryList();
+    public ResponseModel getDiaryList(
+            @RequestParam(value = "sort", required = false, defaultValue = "time") String sort
+    ) {
+        List<DiaryDto.Response> results;
+        if (sort != null && sort.equals("seq")) {
+            results = diaryService.getDiaryListOrderBySeq();
+        } else {
+            results = diaryService.getDiaryList();
+        }
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("results", results);
         responseModel.addData("hostname", System.getenv("HOSTNAME"));

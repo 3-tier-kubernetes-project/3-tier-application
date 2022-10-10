@@ -28,8 +28,18 @@
 </div>
 
 <div class="container" style="font-size: 24px">
-    <button type="button" class="btn btn-secondary mb-3" style="margin: 5px;float:right;font-size: 24px" onclick="location.href='/write'">일기 작성</a>
-    </button>
+    <div>
+        <button type="button" class="btn btn-secondary mb-3" style="margin: 5px;float:right;font-size: 24px"
+                onclick="location.href='/write'">
+            일기 작성
+        </button>
+    </div>
+    <div style="padding-top:20px">
+        <select onchange="location.href=this.value">
+            <option value={{ url_for('list',sort='time') }} {% if sort=='time' %}selected{% endif %}>최신순</option>
+            <option value={{ url_for('list',sort='seq') }} {% if sort=='seq' %}selected{% endif %}>번호순</option>
+        </select>
+    </div>
     <table class="table" style="width:100%">
         <thead>
         <tr>
@@ -57,4 +67,14 @@
 
 </body>
 </html>
-{#    //모달 스크립트#}
+<script>
+    function chageLangSelect() {
+        var langSelect = document.getElementById("selectbox");
+
+        // select element에서 선택된 option의 value가 저장된다.
+        var selectValue = langSelect.options[langSelect.selectedIndex].value;
+
+        // select element에서 선택된 option의 text가 저장된다.
+        var selectText = langSelect.options[langSelect.selectedIndex].text;
+    }
+</script>
