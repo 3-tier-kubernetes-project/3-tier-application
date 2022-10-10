@@ -102,8 +102,8 @@ public class HomeController {
         return responseModel;
     }
 
-    @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public ResponseModel showNode() throws UnknownHostException {
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ResponseModel showInfo() throws UnknownHostException {
         InetAddress inetAddress = InetAddress.getLocalHost();
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData("hostname", inetAddress.getHostName());

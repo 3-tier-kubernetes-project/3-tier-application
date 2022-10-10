@@ -146,11 +146,10 @@ def updateDiary(seq):
 # Node IP 출력
 @app.route('/info')
 def showInfo():
-    result = requests.get(url + '/show').json()
+    result = requests.get(url + '/info').json()
     frontHost = socket.gethostname()
     frontIp = socket.gethostbyname(frontHost)
-    print('ignoring failed address lookup')
-    return render_template("/showNode.html",
+    return render_template("/showInfo.html",
                        backHost=result['data']['hostname'],
                        backIp=result['data']['hostaddress'],
                        frontHost=frontHost,
