@@ -3,7 +3,7 @@ import requests
 import socket
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-url = "http://backend-lb:8080"
+url = "http://backend:8081"
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'

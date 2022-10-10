@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:  
+  backend:
+    image: 2214yj/3-tier-application-backend:1.0
+    depends_on:
+      - database
+    networks:
+      - backend
+      - database
+    deploy:
+      replicas: 3
+    links:
+      - database
+    restart: always
+    environment:
+      - HEALTHCHECK=TRUE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/healthcheck"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  backend-lb:
+    image: 2214yj/3-tier-application-backend-lb:1.0
+    depends_on:
+      - backend
+    networks:
+      - backend
+    restart: always
+
+  database:
+    image: mariadb:10.9
+    volumes:
+      - SampleDatabaseData:/var/lib/mysql
+      - ./database_build/mysql:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=DOCKERTEST
+      - MYSQL_ROOT_PASSWORD=qwerty1234
+    networks:
+      - database
+    restart: always
+
+  frontend:
+    image: 2214yj/3-tier-application-frontend:1.0
+    networks:
+      - frontend
+      - backend
+    restart: always
+    links:
+      - backend-lb
+    deploy:
+      replicas: 3
+     
+  frontend-lb:
+    image: 2214yj/3-tier-application-frontend-lb:1.0
+    depends_on:
+      - frontend
+    networks:
+      - frontend
+    restart: always
+    ports:
+      - 80:35000
+
+volumes:
+  SampleDatabaseData:
+
+networks:
+  backend:
+  database:
+  frontend:
