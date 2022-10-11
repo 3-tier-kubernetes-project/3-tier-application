@@ -80,7 +80,7 @@ def delDiary(seq):
     # # list 화면으로 이동
     print(delResult)
     if httpStatus == 'OK':
-        return redirect(url_for('list'))
+        return redirect(url_for('list',sort='time'))
     else:
         msg = delResult['message']
         print(msg)
@@ -143,7 +143,7 @@ def updateDiary(seq):
     print(diary['title'])
     print(diary['content'])
     updateResult = requests.put(url + '/' + seq, json=diary).json()
-    return redirect(url_for('list'))
+    return redirect(url_for('list',sort='time'))
 
 
 # Node IP 출력
