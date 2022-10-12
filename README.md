@@ -7,7 +7,7 @@
 
 ### 🔶 프로젝트 주제   
 - "춘식 일기" 일기 어플리케이션  
-- 소나기 팀이 기존에 진행했던 ![도커 기반의 3-Tier container Application 프로젝트](https://github.com/KCS-S1-2nd-3team/dcompose-v2.git)를 리팩토링  
+- 소나기 팀이 기존에 진행했던 [도커 기반의 3-Tier container Application 프로젝트](https://github.com/KCS-S1-2nd-3team/dcompose-v2.git)를 리팩토링  
 
 ### 🔶 개선 사항
 - UI 개선
