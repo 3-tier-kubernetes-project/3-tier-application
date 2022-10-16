@@ -28,36 +28,36 @@ _카카오클라우드스쿨에서 진행한 외부 etcd 클러스터 아키텍�
 <br>  
 
 ### 🔶 프로젝트 진행 과정
-__1. 쿠버네티스 서버 구축하기__
+__1. 쿠버네티스 인프라 구축하기__
 <img width="900" alt="쿠버네티스 서버 구성도" src="https://user-images.githubusercontent.com/54930365/196036305-435ac7f5-f77e-46f9-8f20-774fda86d878.png">  
 
-1. image를 안전하게 공유하기 위한 private repository인 Nexus 구축  
+1. image를 안전하게 공유하기 위한 private repository `Nexus` 구축  
    > - 방화벽을 해제하고 외부에서 접속 가능하도록 인바운드, 아웃바운드 규칙을 추가  
    > - http에서 접속 가능하도록 설정한 다음, docker run 명령어를 통해 nexus를 실행  
 2. 프로젝트 환경 구성
    > - dns 파일에 노드의 hostname 등록, 방화벽과 swap 해제, 시간 동기화, ip_forward 설정을 수행
    > - docker 설치
-3. 쿠버네티스를 설치
+3. 쿠버네티스 설치
    > - 쿠버네티스 설치
-   > - 쿠버네티스를 설치한 노드를 필요한 wortker node, loadbalancer, etcd의 개수만큼 복제
-4. etcd cluster를 구축했습니다.
+   > - 쿠버네티스가 설치된 노드를 필요한 wortker node, loadbalancer, etcd의 개수만큼 복제
+4. etcd cluster 구축
    > - etcd 노드에서 kubelet을 etcd에 대한 서비스 관리자로 구성
    > - 각 etcd host를 등록하고 etcd host에 대한 configuration을 진행
    > - etcd1에서 CA를 생성하고 각 etcd의 인증서를 생성. etcd1의 인증서 및 kubeadm 구성을 etcd2, etcd3에 복사
    > - 각 etcd host에서 정적 etcd pod를 생성
-5. loadbalancer를 구축
+5. loadbalancer 구축
    > - 로드밸런서 노드에 haproxy를 설치
-6. master,etcd join with LB
+6. master,etcd join with loadbalancer
    > - master1에서 kubeadm-config.yaml을 작성하고 init 실행
-   > - master2,3를 LB에 조인
+   > - master2,3를 로드밸런서에 조인
    > - worter node 1~5를 로드밸런서에 조인
-   > - master1에서 calic를 통한 네트워크 연결을 수행
-7. metric 수집을 위해 prometheus 설치
+   > - master1에서 calico를 통한 네트워크 연결을 수행
+7. metric 수집을 위해 `prometheus` 설치
    > - kubernetes 패키지 매니저인 helm을 설치
    > - prometheus helm chart를 설치
    > - etcd metric을 수집하기 위한 etcd node의 ip 주소와 port 주소 등을 설정
    > - prometheus 배포 → prometheus 관련 pod와 service를 생성
-8. 수집된 metric의 시각화를 위해 grafana 설치
+8. 수집된 metric의 시각화를 위해 `grafana` 설치
    > - grafana helm chart를 설치
    > - grafana 접속을 위한 계정 및 서비스타입 등을 설정
    > - grafana 배포 → grafana 관련 pod와 서비스를 생성
@@ -245,6 +245,7 @@ __3. kubernetes object 생성__
    >         - containerPort: 35001
    >       restartPolicy: Always
    > ```
+   > 
    > ```yaml
    > # frontend-service.yaml
    > apiVersion: v1
