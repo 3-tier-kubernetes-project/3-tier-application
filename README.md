@@ -1,6 +1,7 @@
 # <img style="weight:40px;height:40px;margin-right:20px" src="https://user-images.githubusercontent.com/54930365/195153805-2460bddc-a0f1-49e7-8a43-df5ede83bac2.png"> 춘식 일기 <img style="weight:80px;height:80px" src="https://user-images.githubusercontent.com/54930365/195151501-5a62e682-7c91-40bf-91d3-a9d8c34583ed.png">
 
-_카카오클라우드스쿨에서 진행한 외부 etcd 클러스터 아키텍처 기반의 3-Tier 쿠버네티스 어플리케이션 구축 프로젝트_
+_카카오클라우드스쿨에서 진행한 외부 etcd 클러스터 아키텍처 기반의 3-Tier 쿠버네티스 어플리케이션 구축 프로젝트_   
+<br>  
 
 ### 🔶 프로젝트 목적  
 - __외부 etcd 클러스터 아키텍처 기반의 3-Tier 쿠버네티스 어플리케이션 구축해보기__    
@@ -10,8 +11,8 @@ _카카오클라우드스쿨에서 진행한 외부 etcd 클러스터 아키텍�
 
 ### 🔶 프로젝트 주제   
 - __"춘식 일기"__ 일기 어플리케이션  
-- 기존에 소나기 팀이 진행했던 [도커 기반의 3-Tier container Application 프로젝트](https://github.com/KCS-S1-2nd-3team/dcompose-v2.git)를 개선
-  <br>  
+- 기존에 소나기 팀이 진행했던 [도커 기반의 3-Tier container Application 프로젝트](https://github.com/KCS-S1-2nd-3team/dcompose-v2.git)를 개선  
+<br>   
 
 ### 🔶 DEV 개선사항
 - UI 개선
@@ -23,15 +24,12 @@ _카카오클라우드스쿨에서 진행한 외부 etcd 클러스터 아키텍�
   - 일기 수정, 삭제 시 비밀번호 인증 기능 추가 
   - 일기 목록 정렬 기능 추가  
   
-    <img width="902" alt="스크린샷 2022-10-12 오전 2 39 07" src="https://user-images.githubusercontent.com/54930365/195161679-dcd246a7-cff0-4c3a-8dc8-4f1f3a52114c.png">
+    <img width="900" alt="스크린샷 2022-10-12 오전 2 39 07" src="https://user-images.githubusercontent.com/54930365/195161679-dcd246a7-cff0-4c3a-8dc8-4f1f3a52114c.png">
 <br>  
 
 ### 🔶 프로젝트 진행 과정
-__1. 쿠버네티스 서버 구축하기__  
-<figure>
-<img width="600" alt="쿠버네티스 서버 구성도" src="https://user-images.githubusercontent.com/54930365/196036305-435ac7f5-f77e-46f9-8f20-774fda86d878.png">
-<figcaption style="position:relative;text-align: center">[ 쿠버네티스 서버 구성도 ]</figcaption>
-</figure>
+__1. 쿠버네티스 서버 구축하기__
+<img width="900" alt="쿠버네티스 서버 구성도" src="https://user-images.githubusercontent.com/54930365/196036305-435ac7f5-f77e-46f9-8f20-774fda86d878.png">  
 
 1. image를 안전하게 공유하기 위한 private repository인 Nexus 구축  
    > - 방화벽을 해제하고 외부에서 접속 가능하도록 인바운드, 아웃바운드 규칙을 추가  
@@ -78,36 +76,193 @@ __2. 3-Tier Application 이미지 배포__
 <br>  
 
 __3. kubernetes object 생성__
-<figure>
-<img width="600" alt="kubernetes object 구성도" src="https://user-images.githubusercontent.com/54930365/196035677-1e77f279-7b7b-4bc1-84d0-c17e84864d75.png">
-<figcaption style="position:relative;text-align: center">[ kubernetes object 구성도 ]</figcaption>
-</figure>
+
+<img width="900" alt="kubernetes object 구성도" src="https://user-images.githubusercontent.com/54930365/196035677-1e77f279-7b7b-4bc1-84d0-c17e84864d75.png">
+
 
 1. database pod의 데이터 보존 및 마운트를 위한 `NFS volume` 설정
    > - NFS 서버 구축
    > - PV 오브젝트 생성
    >   ```yaml
-   >     apiVersion: v1
-   >     kind: PersistentVolume
-   >     metadata:
+   >   # db-pv.yaml
+   >   apiVersion: v1
+   >   kind: PersistentVolume
+   >   metadata:
    >     name: db-pv
-   >     spec:
+   >   spec:
    >     capacity:
-   >     storage: 20Gi
+   >       storage: 20Gi
    >     accessModes:
    >     - ReadWriteMany
-   >       persistentVolumeReclaimPolicy: Retain
-   >    nfs:
-   >    path: /data_dir
-   >    server: 192.168.56.111
+   >     persistentVolumeReclaimPolicy: Retain
+   >     nfs:
+   >       path: /data_dir
+   >       server: 192.168.56.111
    >   ```
    > - PVC 오브젝트 생성
-2. database pod의 실행 및 관리를 위한 `deployment`, `service` 구축
-   >- 기밀 정보인 데이터베이스 비밀번호를 secret 오브젝트에 담아 환경변수 값으로 전달
+   >   ```yaml
+   >   # db-pvc.yaml  
+   >   apiVersion: v1 
+   >   kind: PersistentVolumeClaim 
+   >   metadata:
+   >     labels:
+   >       service: db-pvc
+   >     name: db-pvc
+   >   spec:
+   >     accessModes:
+   >     - ReadWriteMany
+   >     resources:
+   >       requests:
+   >         storage: 20Gi
+   >   ```
+2. database pod의 실행 및 관리를 위한 `deployment`, `service` manifest 파일 작성  
+   >- 기밀 정보인 데이터베이스 비밀번호를 secret 오브젝트에 담아 환경변수 값으로 전달  
+   >  `kubectl create secret generic database-pass --from-literal=password=qwerty1234`
    >- mariadb 데이터 경로와 nfs pvc를 마운트  
-3. backend pod의 실행 및 관리를 위한 `deployment`와 `service` 구축
-4. frontend pod의 실행 및 관리를 위한 `deployment`와 `service` 구축
-5. `kubectl apply -f [manifest 파일명]` 명령어를 통해, 위에서 manifest file로 설정한 쿠버네티스 오브젝트들을 생성
+   >  ```yaml
+   >  # database-deployment.yaml
+   >  apiVersion: apps/v1
+   >  kind: Deployment
+   >  metadata:
+   >    labels:
+   >      service: database
+   >    name: database
+   >  spec:
+   >    replicas: 1
+   >    selector:
+   >      matchLabels:
+   >        service: database
+   >    template:
+   >      metadata:
+   >        labels:
+   >          service: database
+   >      spec:
+   >        containers:
+   >        - env:
+   >          - name: MYSQL_DATABASE
+   >            value: DOCKERTEST
+   >          - name: MYSQL_ROOT_PASSWORD
+   >            valueFrom:
+   >              secretKeyRef:
+   >                name: database-pass
+   >                key: password
+   >          image: mariadb:10.9
+   >          name: database
+   >          ports:
+   >          - containerPort: 3306
+   >          volumeMounts:
+   >            - mountPath: /var/lib/mysql
+   >              name: db-pvc
+   >        restartPolicy: Always
+   >        volumes:
+   >          - name: db-pvc
+   >            persistentVolumeClaim:
+   >              claimName: db-pvc
+   >  ```
+   >  ```yaml
+   >  # database-service.yaml
+   >  apiVersion: v1
+   >  kind: Service
+   >  metadata:
+   >    labels:
+   >      service: database
+   >    name: database
+   >  spec:
+   >    ports:
+   >    - name: "3306"
+   >      port: 3306
+   >      targetPort: 3306
+   >    selector:
+   >      service: database
+   >  ```
+3. backend pod의 실행 및 관리를 위한 `deployment`와 `service` manifest 파일 작성  
+   > ```yaml
+   > # backend-deployment.yaml
+   > apiVersion: apps/v1
+   > kind: Deployment
+   > metadata:
+   >   labels:
+   >     service: backend
+   >   name: backend
+   > spec:
+   >   replicas: 3
+   >   selector:
+   >     matchLabels:
+   >       service: backend
+   >   template:
+   >     metadata:
+   >       labels:
+   >         service: backend
+   >     spec:
+   >       containers:
+   >       - image: 2214yj/3-tier-application-backend:nolb
+   >         imagePullPolicy: Always
+   >         name: backend
+   >         ports:
+   >         - containerPort: 8081
+   >       restartPolicy: Always
+   > ```
+   > ```yaml
+   > # backend-service.yaml
+   > apiVersion: v1
+   > kind: Service
+   > metadata:
+   >   labels:
+   >     service: backend
+   >   name: backend
+   > spec:
+   >   ports:
+   >   - name: "8081"
+   >     port: 8081
+   >     targetPort: 8081
+   >   selector:
+   >     service: backend
+   > ```
+4. frontend pod의 실행 및 관리를 위한 `deployment`와 `service` manifest 파일 작성  
+   > ```yaml
+   > # frontend-deployment.yaml
+   > apiVersion: apps/v1
+   > kind: Deployment
+   > metadata:
+   >   labels:
+   >     service: frontend
+   >   name: frontend
+   > spec:
+   >   replicas: 3
+   >   selector:
+   >     matchLabels:
+   >       service: frontend
+   >   template:
+   >     metadata:
+   >       labels:
+   >         service: frontend
+   >     spec:
+   >       containers:
+   >       - image: 2214yj/3-tier-application-frontend:nolb
+   >         imagePullPolicy: Always
+   >         name: frontend
+   >         ports:
+   >         - containerPort: 35001
+   >       restartPolicy: Always
+   > ```
+   > ```yaml
+   > # frontend-service.yaml
+   > apiVersion: v1
+   > kind: Service
+   > metadata:
+   >   labels:
+   >     service: frontend
+   >   name: frontend
+   > spec:
+   >   type: NodePort
+   >   ports:
+   >   - name: "80"
+   >     port: 80
+   >     targetPort: 35001
+   >   selector:
+   >     service: frontend
+   > ```
+5. `kubectl apply -f [manifest 파일명]` 명령어를 통해, 위에서 manifest file로 설정한 쿠버네티스 오브젝트들을 생성  
 
 
 
